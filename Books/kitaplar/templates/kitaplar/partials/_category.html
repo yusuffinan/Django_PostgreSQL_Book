@@ -1,0 +1,6 @@
+<div class="list-group">   
+    <a href="/category_list" class="list-group-item list-group-item-action{% if selected_category is None %} active{% endif %}">Tüm Kategoriler</a> 
+    {% for categor in categories %}
+       <a href="{% url 'books_by' categor.slug %}" class="list-group-item list-group-item-action {% if selected_category == categor.slug %} active{% endif %}" >{{categor.cname}}</a>
+       {% endfor %}
+ </div>

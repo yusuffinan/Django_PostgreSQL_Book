@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block t %}    
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-3">
+                {% include "kitaplar/partials/_category.html" %}
+            </div>
+            <div class="col-9">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:100px"></th>
+                            <th>Kitap İsmi</th>
+                            <th>Yazarı</th>
+                            <th>Yayınevi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if books_list|length == 0 %}
+                            <div class="alert alert-danger">Henüz bu kategoride bir kitap bulunmuyor.</div>
+                        {% endif %}
+                        {% for bookl in books_list %}
+                        <tr>
+                            <td> <img class="img-fluid" src="{{bookl.image.url}}" alt=""></td>
+                            <td>{{bookl.name}}</td>
+                            <td>{{bookl.author}}</td>
+                            <td>{{bookl.publisher}}</td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock t %}
