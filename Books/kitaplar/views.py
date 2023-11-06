@@ -1,7 +1,7 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
-from kitaplar.models import Authorr, Category, Library
+from kitaplar.models import Authorr, Category, Library, Publisherr
 
 # Create your views here.
 
@@ -14,6 +14,7 @@ def category(request):
         "categories":kategori,
         "books_list":books_list
         })
+
 def getBooksByCategory(request, slug):
     books_list = Library.objects.filter(categories__slug=slug)
     kategori = Category.objects.all()
@@ -40,4 +41,23 @@ def author_p(request, slug):
     })
 
 def publisher_p(request,slug):
-    pass
+    books = Library.objects.filter(publisher__slug=slug)
+    publisher_detail = Publisherr.objects.all()
+    return render(request, "kitaplar/publisher.html", {
+        "book": books,
+        "author_detail": publisher_detail
+    })
+
+def search(request):
+    if 'q' in request.GET and request.GET['q'] != '':
+        q = request.GET['q']
+        kategori = Category.objects.all()
+        books_list = Library.objects.filter(name__contains=q) | Library.objects.filter(
+            author__aname__contains=q) | Library.objects.filter(publisher__pname__contains=q)
+    else:
+        return redirect("category_list")
+    return render(request, 'kitaplar/search.html', {
+
+        "categories":kategori,
+        "books_list":books_list
+        })

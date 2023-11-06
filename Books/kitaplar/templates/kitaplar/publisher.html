@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 {% block title %}
-    Yazar
+    Yayınevi
 {% endblock title %}
 {% block t %}   
 <div class="container mt-5">
     <div class="row">
-    
+        
         <div class="col-12">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr>
                         <th>Kitaplar</th>
-                        <th>Yayınevi</th>
+                        <th>Yazar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,10 +22,10 @@
                             </td>
                         </tr>
                     {% endif %}
-                    {% for book_s in book %}
+                    {% for book_p in book %}
                         <tr>
-                            <td>{{ book_s.name }}</td>
-                            <td>{{ book_s.publisher }}</td>
+                            <td>{{ book_p.name }}</td>
+                            <td>{{ book_p.author }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

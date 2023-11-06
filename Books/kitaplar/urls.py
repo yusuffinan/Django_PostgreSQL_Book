@@ -7,6 +7,7 @@ urlpatterns = [
     path("kategori/<slug:slug>", views.getBooksByCategory, name="books_by"),
     path('detay/<int:id>', views.details, name="detay"),
     path('yazarsayfasi/<slug:slug>',views.author_p, name="yazarsayfasi"),
-    path('yayinevi/<slug:slug>',views.publisher_p, name="yayinevi")
+    path('yayinevi/<slug:slug>',views.publisher_p, name="yayinevi"),
+    path('search', views.search, name="search")
 
 ]
