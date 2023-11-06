@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% load static %}
+{% block title %}
+    List
+{% endblock title %}
 {% block t %}    
     <div class="container mt-3">
         <div class="row">
@@ -21,13 +24,13 @@
                             <div class="alert alert-danger">Henüz bu kategoride bir kitap bulunmuyor.</div>
                         {% endif %}
                         {% for bookl in books_list %}
-                        <tr>
-                            <td> <img class="img-fluid" src="{{bookl.image.url}}" alt=""></td>
-                            <td>{{bookl.name}}</td>
-                            <td>{{bookl.author}}</td>
-                            <td>{{bookl.publisher}}</td>
-                            
-                        </tr>
+                            <tr>
+                                <td> <img class="img-fluid" src="{{bookl.image.url}}" alt=""></td>
+                                <td><a href="{% url "detay" bookl.id %}">{{bookl.name}}</a></td>
+                                <td><a href="{% url "yazarsayfasi" bookl.author.slug %}">{{bookl.author}}</a></td>
+                                <td>{{bookl.publisher}}</td>
+                                
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

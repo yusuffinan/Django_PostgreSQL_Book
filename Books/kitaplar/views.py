@@ -1,6 +1,7 @@
+from django.http import Http404
 from django.shortcuts import render
 
-from kitaplar.models import Category, Library
+from kitaplar.models import Authorr, Category, Library
 
 # Create your views here.
 
@@ -22,4 +23,21 @@ def getBooksByCategory(request, slug):
         "selected_category": slug
         })
 
+def details(request, id):
+    try:
+        book_detail = Library.objects.get(id=id)
+    except:
+        raise Http404("Bulumuyor")
 
+    return render(request, "kitaplar/details.html", {"book_detail":book_detail})
+
+def author_p(request, slug):
+    books = Library.objects.filter(author__slug=slug)
+    author_detail = Authorr.objects.all()
+    return render(request, "kitaplar/author.html", {
+        "book": books,
+        "author_detail": author_detail
+    })
+
+def publisher_p(request,slug):
+    pass

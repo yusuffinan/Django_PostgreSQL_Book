@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}
+    Yazar
+{% endblock title %}
+{% block t %}   
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-3">
+            
+        </div>
+        <div class="col-9">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>Kitaplar</th>
+                        <th>Yayınevi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if book|length == 0 %}
+                        <tr>
+                            <td colspan="2">
+                                <div class="alert alert-danger">Kitap Bulunmuyor</div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% for book_s in book %}
+                        <tr>
+                            <td>{{ book_s.name }}</td>
+                            <td>{{ book_s.publisher }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock t %}
