@@ -13,6 +13,20 @@
             <a class="nav-link" href="#">Create</a>
           </li>
         </ul>
+        <ul class="navbar-nav me-3 mb-3 mb-lg-0">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href="{% url "logout_" %}" class="btn btn-outline-danger">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a href="{% url "login_" %}" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url "register_" %}" class="nav-link">Register</a>
+            </li>
+          {% endif %}
+        </ul>
         <form class="d-flex" action="{% url "search" %}">
           <input class="form-control me-2" name="q" type="search" placeholder="Search.." aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>

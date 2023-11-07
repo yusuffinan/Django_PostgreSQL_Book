@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}
+        Login
+    {% endblock title %}
+{% block t %}
+    
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12">
+                <h1>Login</h1>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% include "partials/_forms.html" %}
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock t %}
