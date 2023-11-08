@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}
+    Profile
+{% endblock title %}
+{% block t %}
+    <div class="container mt-5">
+        <div class="row mb-3">
+            <div class="col-4">
+                <h2>Profil</h2>
+                <table class="table table-sm table-bordered mt-3">
+                    <tr>
+                        <th>Kullanıcı adı</th>  
+                        <td>{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <th>E-mail</th>  
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>  
+                        <td>{{user.first_name}}  {{user.last_name}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock t %}
