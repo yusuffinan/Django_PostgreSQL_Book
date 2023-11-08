@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% load static %}
+{% block title %}
+    Register
+{% endblock title %}
 {% block t %}
-    {% block title %}
-        Register
-    {% endblock title %}
     <div class="container mt-3">
         <div class="row">
             <div class="col-12">
@@ -12,7 +12,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     {% include "partials/_forms.html" %}
-                    <button type="submit" class="btn btn-dark"></button>
+                    <button type="submit" class="btn btn-dark">Register</button>
                 </form>
 
             </div>
