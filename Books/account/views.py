@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from  .forms import LoginForm, RegisterForm, UserProfileForm
+from  .forms import LoginForm, RegisterForm, UpdateUserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from .models import Profile
 from django.contrib.auth.decorators import login_required
@@ -49,9 +49,20 @@ def user_profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile_')  
-        
+            return redirect("profile_")
     else:
         form = UserProfileForm()
-    
     return render(request, 'account/profile.html', {'form': form})
+
+@login_required
+def user_profile_info(request):
+    if request.method == 'POST':
+        form2= UpdateUserForm(request.POST ,request.FILES, instance=request.user)
+        if form2.is_valid():
+            form2.save()
+            return redirect("profile_")
+        
+    else:
+        form2 =UpdateUserForm(instance=request.user)
+        return redirect("profile_update")
+    return render(request, 'account/profile.html', {'form2': form2})
