@@ -27,12 +27,11 @@ def user_register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Kullanıcıyı kaydet
-            # Kullanıcı kaydı tamamlandığında profil nesnesini oluşturun
+            user = form.save()  
             profile = Profile(user=user, profile_picture='varsayilan.jpg')
             profile.save()
-            login(request, user)  # Kullanıcıyı oturum açmış olarak işaretleyin
-            return redirect("login_")  # Başka bir sayfaya yönlendirme yapabilirsiniz
+            login(request, user)  
+            return redirect("login_")  
         else:
             return render(request, "account/register.html", {"form": form})
     else:
@@ -50,7 +49,8 @@ def user_profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile_')  # Profil sayfasına yönlendirme yapabilirsiniz
+            return redirect('profile_')  
+        
     else:
         form = UserProfileForm()
     
