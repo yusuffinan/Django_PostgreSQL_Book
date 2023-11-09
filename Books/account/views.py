@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
-from  .forms import LoginForm, RegisterForm
+from  .forms import LoginForm, RegisterForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
+from .models import Profile
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -24,11 +24,15 @@ def user_login(request):
 
 
 def user_register(request):
-    if request.method=="POST":
+    if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("login_")
+            user = form.save()  # Kullanıcıyı kaydet
+            # Kullanıcı kaydı tamamlandığında profil nesnesini oluşturun
+            profile = Profile(user=user, profile_picture='varsayilan.jpg')
+            profile.save()
+            login(request, user)  # Kullanıcıyı oturum açmış olarak işaretleyin
+            return redirect("login_")  # Başka bir sayfaya yönlendirme yapabilirsiniz
         else:
             return render(request, "account/register.html", {"form": form})
     else:
@@ -42,4 +46,12 @@ def user_logout(request):
 
 @login_required
 def user_profile(request):
-    return render(request, "account/profile.html")
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_')  # Profil sayfasına yönlendirme yapabilirsiniz
+    else:
+        form = UserProfileForm()
+    
+    return render(request, 'account/profile.html', {'form': form})

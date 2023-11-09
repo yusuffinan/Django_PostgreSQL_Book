@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Category(models.Model):
     cname=models.CharField(max_length=50)
     slug = models.SlugField(default="", db_index=True, null= False, unique=True, max_length=50)
@@ -36,3 +37,4 @@ class Library(models.Model):
     def __str__(self):
         return f"{self.name}"
     
+
