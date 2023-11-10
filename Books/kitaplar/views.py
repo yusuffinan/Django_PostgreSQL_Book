@@ -1,7 +1,7 @@
 from django.http import Http404
-from django.shortcuts import redirect, render
-
-from kitaplar.models import Authorr, Category, Library, Publisherr
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
+from kitaplar.models import Authorr, Category, Favorite, Library, Publisherr
 
 # Create your views here.
 
@@ -61,3 +61,10 @@ def search(request):
         "categories":kategori,
         "books_list":books_list
         })
+
+@login_required
+def favorite(request, id):
+    library = get_object_or_404(Library, pk=id)
+    created = Favorite.objects.get_or_create(user=request.user, library=library)
+    user_favorites = Favorite.objects.filter(user=request.user)  # Kullanıcının tüm favori kitapları
+    return render(request, "kitaplar/favorite.html", {"library": library, "created": created, "user_favorites": user_favorites})

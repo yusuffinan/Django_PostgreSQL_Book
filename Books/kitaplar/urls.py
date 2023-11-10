@@ -8,6 +8,8 @@ urlpatterns = [
     path('detay/<int:id>', views.details, name="detay"),
     path('yazarsayfasi/<slug:slug>',views.author_p, name="yazarsayfasi"),
     path('yayinevi/<slug:slug>',views.publisher_p, name="yayinevi"),
-    path('search', views.search, name="search")
+    path('search', views.search, name="search"),
+    path('favorite/<int:id>', views.favorite, name="favorite"),
+
 
 ]

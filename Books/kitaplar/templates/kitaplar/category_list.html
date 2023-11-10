@@ -17,6 +17,7 @@
                             <th>Kitap İsmi</th>
                             <th>Yazarı</th>
                             <th>Yayınevi</th>
+                            <th>Favoriye Ekle</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +30,7 @@
                                 <td><a href="{% url "detay" bookl.id %}">{{bookl.name}}</a></td>
                                 <td><a href="{% url "yazarsayfasi" bookl.author.slug %}">{{bookl.author}}</a></td>
                                 <td><a href="{% url "yayinevi" bookl.publisher.slug %}">{{bookl.publisher}}</a></td>
-                                
+                                <td> <a class="btn btn-primary" href="{% url 'favorite' bookl.id %}">Favorilere Ekle</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
