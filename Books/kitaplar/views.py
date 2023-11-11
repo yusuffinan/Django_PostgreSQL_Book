@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from kitaplar.forms import CreateBook
 from kitaplar.models import Authorr, Category, Favorite, Library, Publisherr
 
 # Create your views here.
@@ -68,3 +69,15 @@ def favorite(request, id):
     created = Favorite.objects.get_or_create(user=request.user, library=library)
     user_favorites = Favorite.objects.filter(user=request.user)  # Kullanıcının tüm favori kitapları
     return render(request, "kitaplar/favorite.html", {"library": library, "created": created, "user_favorites": user_favorites})
+
+@login_required
+def creates(request):
+    if request.method == "POST":
+        form = CreateBook(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        else:
+            return redirect("category_list")
+    else:
+        form = CreateBook()
+    return render(request, "kitaplar/create.html",{"form":form})

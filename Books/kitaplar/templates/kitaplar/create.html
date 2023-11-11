@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}
+    Create
+{% endblock title %}
+
+{% block t %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url "create_book" %}" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-3">
+                    {{ field.label_tag }}: {{ field }}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary"> Oluştur</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock t %}
+
