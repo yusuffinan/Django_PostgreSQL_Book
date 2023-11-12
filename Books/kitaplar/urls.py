@@ -12,6 +12,7 @@ urlpatterns = [
     path('favorite/<int:id>', views.favorite, name="favorite"),
     path('create_book',views.creates, name="create_book"),
     path('delete_book/<int:id>',views.deleted, name="delete_book"),
+    path('update_book/<int:id>',views.updated, name="update_book")
 
 
 ]

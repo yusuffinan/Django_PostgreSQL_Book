@@ -8,3 +8,8 @@ class CreateBook(ModelForm):
         fields = '__all__'
   
        
+class UpdateBook(ModelForm):
+    class Meta:
+        model = Library
+        fields = '__all__'
+  

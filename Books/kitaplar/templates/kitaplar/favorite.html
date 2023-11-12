@@ -12,6 +12,7 @@
             <h3>Favori Kitaplar</h3>
             <table class="table table-sm table-bordered">
                 <thead>
+                    <th style="width:50px"></th>
                     <th>Kitap İsmi</th>
                     <th>Yazar İsmi</th>
 
@@ -19,6 +20,7 @@
                 <tbody>
                     {% for favorite in user_favorites %}
                     <tr>
+                        <td><img class="img-fluid" src="{{ favorite.library.image.url }}" alt=""></td>
                         <td>{{ favorite.library.name }} </td>
                         <td>{{ favorite.library.author }}</td>
 

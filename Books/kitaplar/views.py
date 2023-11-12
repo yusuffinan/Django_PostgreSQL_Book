@@ -1,7 +1,8 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
-from kitaplar.forms import CreateBook
+from django.urls import reverse
+from kitaplar.forms import CreateBook, UpdateBook
 from kitaplar.models import Authorr, Category, Favorite, Library, Publisherr
 
 # Create your views here.
@@ -92,3 +93,16 @@ def deleted(request, id):
         form.delete()
         return redirect("category_list")
     return render(request, "kitaplar/delete.html", {"form":form})
+
+@user_passes_test(isAdmin)
+def updated(request, id):
+    kitap = get_object_or_404(Library, pk =id)
+    if request.method == "POST":
+        form = UpdateBook(request.POST, request.FILES, instance=kitap)
+        if form.is_valid():
+            form.save()
+            detay_url = reverse("detay", args=[id])
+            return redirect(detay_url)
+    else:
+        form = UpdateBook(instance=kitap)
+    return render(request, "kitaplar/update.html", {"form":form})
