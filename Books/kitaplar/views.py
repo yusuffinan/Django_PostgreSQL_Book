@@ -1,10 +1,12 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from kitaplar.forms import CreateBook
 from kitaplar.models import Authorr, Category, Favorite, Library, Publisherr
 
 # Create your views here.
+def isAdmin(user):
+    return user.is_superuser
 
 def index(request):
     return render(request, 'kitaplar/index.html')
@@ -70,14 +72,23 @@ def favorite(request, id):
     user_favorites = Favorite.objects.filter(user=request.user)  # Kullanıcının tüm favori kitapları
     return render(request, "kitaplar/favorite.html", {"library": library, "created": created, "user_favorites": user_favorites})
 
-@login_required
+@user_passes_test(isAdmin)
 def creates(request):
     if request.method == "POST":
         form = CreateBook(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        else:
             return redirect("category_list")
+        else:
+            return render(request, "kitaplar/create.html", {"form": form})
     else:
         form = CreateBook()
-    return render(request, "kitaplar/create.html",{"form":form})
+    return render(request, "kitaplar/create.html", {"form": form})
+
+@user_passes_test(isAdmin)
+def deleted(request, id):
+    form = get_object_or_404(Library, pk =id)
+    if request.method == "POST":
+        form.delete()
+        return redirect("category_list")
+    return render(request, "kitaplar/delete.html", {"form":form})

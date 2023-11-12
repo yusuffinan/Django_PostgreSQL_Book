@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}
+    Delete
+{% endblock title %}
+
+{% block t %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <strong> {{form.name}} </strong>
+            <p>İsimli kitabı silmek istediğinizden emin misiniz? </p>
+            <form method="post" action="{% url "delete_book" form.id %}">
+                {% csrf_token %}
+                
+                <button type="submit" class="btn btn-danger"> Sil</button>
+                <a class="btn btn-info" href="{% url "category_list" %}">Vazgeç</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock t %}
+

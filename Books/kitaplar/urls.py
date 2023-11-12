@@ -10,7 +10,8 @@ urlpatterns = [
     path('yayinevi/<slug:slug>',views.publisher_p, name="yayinevi"),
     path('search', views.search, name="search"),
     path('favorite/<int:id>', views.favorite, name="favorite"),
-    path('create_book',views.creates, name="create_book")
+    path('create_book',views.creates, name="create_book"),
+    path('delete_book/<int:id>',views.deleted, name="delete_book"),
 
 
 ]

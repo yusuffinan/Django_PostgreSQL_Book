@@ -6,4 +6,5 @@ class CreateBook(ModelForm):
     class Meta:
         model = Library
         fields = '__all__'
+  
        
