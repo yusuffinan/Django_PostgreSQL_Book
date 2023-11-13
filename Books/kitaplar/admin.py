@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Library, Category, Authorr, Publisherr
+from .models import Favorite, Library, Category, Authorr, Publisherr
 
 # Register your models here.
 @admin.register(Library)
@@ -23,4 +23,8 @@ class AuthorrAdmin(admin.ModelAdmin):
 class PublisherrAdmin(admin.ModelAdmin):
     list_display = ("pname","slug")
     prepopulated_fields = {"slug": ("pname",),}
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ("user","library")
     

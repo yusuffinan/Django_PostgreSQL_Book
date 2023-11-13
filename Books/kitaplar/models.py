@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Category(models.Model):
     cname=models.CharField(max_length=50)
     slug = models.SlugField(default="", db_index=True, null= False, unique=True, max_length=50)
@@ -44,4 +45,11 @@ class Favorite(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.library.name}"
     
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Library, on_delete=models.CASCADE)  # Burada Book, kitap modelinizi temsil etmelidir.
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.user.username} - {self.book.title} - {self.created_at}'

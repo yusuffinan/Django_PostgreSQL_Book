@@ -6,15 +6,41 @@
 <div class="container mb-3">
     <div class="row">
         <div class="col-3">
-            <img src="{{book_detail.image.url}}" alt="" class="img-fluid">
+            <img src="{{ book.image.url }}" alt="" class="img-fluid">
         </div>
         <div class="col-9">
-            <h1> {{book_detail.name}}</h1>
-            <h6>Yazar: {{book_detail.author}}</h3>
-            <h6>Yayınevi: {{book_detail.publisher}}</h3>
-            <p>{{book_detail.summary}}</p>
-
+            <h1>{{ book.name }}</h1>
+            <h6>Yazar: {{ book.author }}</h3>
+            <h6>Yayınevi: {{ book.publisher }}</h3>
+            <p>{{ book.summary }}</p>
+            <br>
+            <hr>
+            <div class="container mb-3">
+                <h5>Yorumlar</h5>
+                {% if comments %}
+                {% for comment in comments %}
+                <hr>
+                    <p>{{ comment.user.username }} - {{ comment.text }} - {{ comment.created_at }}</p>
+                {% endfor %}
+                {% else %}
+                <hr>
+                <p>Yorum yok</p>
+                {% endif %}
+            </div>
+            
+            <!-- Yorum Ekleme Formu -->
+            <div class="container mb-3">
+                <h5>Yorum Ekle</h5>
+                <form action="{% url 'detay' book.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-primary" type="submit">Yorum Yap</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Yorumları Göster -->
+
 {% endblock t %}

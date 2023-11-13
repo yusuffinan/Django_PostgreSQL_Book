@@ -2,8 +2,8 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse
-from kitaplar.forms import CreateBook, UpdateBook
-from kitaplar.models import Authorr, Category, Favorite, Library, Publisherr
+from kitaplar.forms import CreateBook, UpdateBook, CommentForm
+from kitaplar.models import Authorr, Category, Favorite, Library, Publisherr, Comment
 
 # Create your views here.
 def isAdmin(user):
@@ -28,13 +28,28 @@ def getBooksByCategory(request, slug):
         "selected_category": slug
         })
 
-def details(request, id):
-    try:
-        book_detail = Library.objects.get(id=id)
-    except:
-        raise Http404("Bulumuyor")
+# def details(request, id):
+#     try:
+#         book_detail = Library.objects.get(id=id)
+#     except:
+#         raise Http404("Bulumuyor")
 
-    return render(request, "kitaplar/details.html", {"book_detail":book_detail})
+#     return render(request, "kitaplar/details.html", {"book_detail":book_detail})
+def details(request, id):
+    book = get_object_or_404(Library, pk=id)
+    comments = Comment.objects.filter(book=book)
+    form = CommentForm()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.book = book
+            comment.save()
+            return redirect('detay', id=id)  # Aynı sayfaya yönlendirme
+
+    return render(request, 'kitaplar/details.html', {'book': book, 'comments': comments, 'form': form})
 
 def author_p(request, slug):
     books = Library.objects.filter(author__slug=slug)
@@ -72,6 +87,7 @@ def favorite(request, id):
     created = Favorite.objects.get_or_create(user=request.user, library=library)
     user_favorites = Favorite.objects.filter(user=request.user)  # Kullanıcının tüm favori kitapları
     return render(request, "kitaplar/favorite.html", {"library": library, "created": created, "user_favorites": user_favorites})
+
 
 @user_passes_test(isAdmin)
 def creates(request):
