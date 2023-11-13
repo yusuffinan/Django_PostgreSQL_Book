@@ -6,7 +6,8 @@
     <div class="container mt-5">
         <div class="row mb-3">
             <div class="col-4">
-                <img src="{{ user.profile.profile_picture.url }}" alt="Profil Resmi">
+                
+                <img class ="img-fluid"src="{{ user.profile.profile_picture.url }}" alt="Profil Resmi"><br>
                 <form method="post" action="{% url 'profile_' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
