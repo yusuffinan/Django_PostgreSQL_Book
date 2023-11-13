@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Favorite, Library, Category, Authorr, Publisherr
+from .models import Favorite, Library, Category, Authorr, Publisherr, Comment
 
 # Register your models here.
 @admin.register(Library)
@@ -28,3 +28,6 @@ class PublisherrAdmin(admin.ModelAdmin):
 class FavoriteAdmin(admin.ModelAdmin):
     list_display = ("user","library")
     
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("user","book")
